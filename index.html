@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b12">
+  <title>POWER PULSE | AHMED Eldebrkey</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #080b12;
+      color: white;
+    }
+    header {
+      padding: 25px 18px;
+      text-align: center;
+      background: linear-gradient(135deg,#101b36,#075ce5);
+      border-bottom: 2px solid #1685ff;
+    }
+    header h1 { margin: 0; font-size: 30px; }
+    header p { color: #c9ddff; }
+    main { padding: 18px; max-width: 650px; margin: auto; }
+    .card {
+      background: #121a29;
+      border: 1px solid #263955;
+      border-radius: 16px;
+      padding: 18px;
+      margin: 16px 0;
+    }
+    h2 { color: #58a6ff; }
+    button {
+      background: #0878ff;
+      color: white;
+      border: 0;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px 0;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0;
+      border-radius: 9px;
+      border: 1px solid #3a5275;
+      background: #080f1c;
+      color: white;
+      font-size: 16px;
+    }
+    .stat { color: #a9cfff; }
+    footer { text-align: center; padding: 25px; color: #91a1b8; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚡ POWER PULSE</h1>
+    <p>قوتك تبدأ من هنا 💪</p>
+    <small>تطوير AHMED Eldebrkey</small>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>أهلاً بيك يا بطل!</h2>
+      <p>ابدأ رحلتك الرياضية وسجّل تقدمك كل يوم.</p>
+      <p class="stat">هدفك النهارده: تمرين أفضل، وصحة أقوى.</p>
+    </section>
+
+    <section class="card">
+      <h2>🏋️ برنامج التمرين</h2>
+      <label for="workout">اختار تمرينك:</label>
+      <select id="workout">
+        <option>تمارين الصدر</option>
+        <option>تمارين الظهر</option>
+        <option>تمارين الأرجل</option>
+        <option>تمارين الكتف</option>
+        <option>تمارين الذراع</option>
+        <option>تمارين البطن</option>
+      </select>
+      <button onclick="showWorkout()">عرض التمرين</button>
+      <p id="workoutResult"></p>
+    </section>
+
+    <section class="card">
+      <h2>⏱️ مؤقت الراحة</h2>
+      <p id="timer">60 ثانية</p>
+      <button onclick="startTimer()">ابدأ الراحة</button>
+      <button onclick="stopTimer()">إيقاف</button>
+    </section>
+
+    <section class="card">
+      <h2>📊 تسجيل الوزن</h2>
+      <label for="weight">وزنك بالكيلو:</label>
+      <input id="weight" type="number" min="1" max="500" placeholder="مثال: 75">
+      <button onclick="saveWeight()">حفظ الوزن</button>
+      <p id="weightResult"></p>
+    </section>
+
+    <section class="card">
+      <h2>🥗 حاسبة السعرات التقريبية</h2>
+      <label for="calories">السعرات في الوجبة:</label>
+      <input id="calories" type="number" min="0" placeholder="مثال: 450">
+      <button onclick="addCalories()">إضافة الوجبة</button>
+      <p id="calorieResult">إجمالي اليوم: 0 سعرة</p>
+    </section>
+  </main>
+
+  <footer>
+    POWER PULSE © 2026<br>
+    AHMED Eldebrkey
+  </footer>
+
+  <script>
+    let seconds = 60;
+    let timerInterval = null;
+    let totalCalories = 0;
+
+    function showWorkout() {
+      const name = document.getElementById('workout').value;
+      document.getElementById('workoutResult').textContent =
+        'تم اختيار: ' + name + '. ابدأ بإحماء مناسب قبل التمرين.';
+    }
+
+    function startTimer() {
+      if (timerInterval) return;
+      timerInterval = setInterval(() => {
+        if (seconds > 0) {
+          seconds--;
+          document.getElementById('timer').textContent = seconds + ' ثانية';
+        } else {
+          stopTimer();
+          document.getElementById('timer').textContent = 'انتهت الراحة! 💪';
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    function saveWeight() {
+      const value = Number(document.getElementById('weight').value);
+      if (!value || value < 1 || value > 500) {
+        alert('اكتب وزنًا صحيحًا بالكيلو.');
+        return;
+      }
+      try {
+        localStorage.setItem('powerPulseWeight', value);
+      } catch (e) {}
+      document.getElementById('weightResult').textContent =
+        'وزنك المسجل: ' + value + ' كجم';
+    }
+
+    function addCalories() {
+      const field = document.getElementById('calories');
+      const value = Number(field.value);
+      if (!field.value || value < 0) {
+        alert('اكتب عدد السعرات بشكل صحيح.');
+        return;
+      }
+      totalCalories += value;
+      document.getElementById('calorieResult').textContent =
+        'إجمالي اليوم: ' + totalCalories + ' سعرة';
+      field.value = '';
+    }
+  </script>
+</body>
+</html>
