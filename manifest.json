@@ -1,0 +1,12 @@
+
+{
+  "id": "/POWER-PULSE/",
+  "name": "POWER PULSE",
+  "short_name": "POWER PULSE",
+  "description": "POWER PULSE is a simple and easy-to-use web application.",
+  "start_url": "/POWER-PULSE/",
+  "scope": "/POWER-PULSE/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#080B12"
+}
